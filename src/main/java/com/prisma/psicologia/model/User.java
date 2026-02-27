@@ -4,7 +4,10 @@ import java.time.LocalDateTime;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import jakarta.persistence.*;
+import lombok.*;
 
+@Getter
+@Setter
 @Entity
 @Table(name ="users")
 public class User {
@@ -45,5 +48,5 @@ public class User {
 
     public User(){}
 
-    // Getters & Setters
+   
 }
