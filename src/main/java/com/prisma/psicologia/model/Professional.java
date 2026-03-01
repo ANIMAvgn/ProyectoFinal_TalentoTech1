@@ -1,8 +1,12 @@
 package com.prisma.psicologia.model;
 
 import java.util.List;
-import jakarta.persistence.*;
 
+import jakarta.persistence.*;
+import lombok.*;
+
+@Getter
+@Setter
 @Entity
 @Table(name = "professionals")
 public class Professional {
@@ -11,24 +15,17 @@ public class Professional {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nombre;
-    private String apellido;
-    private String telefono;
-    private String especialidad;
-    private String numeroLicencia;
-    private Double fee;
-
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false, unique = true)
     private User user;
+
+    // Un profesional tiene muchos pacientes
+    @OneToMany(mappedBy = "professional", fetch = FetchType.LAZY)
+    private List<Patient> patients;
 
     @OneToMany(mappedBy = "professional", fetch = FetchType.LAZY)
     private List<Appointment> appointments;
 
     @OneToMany(mappedBy = "professional", fetch = FetchType.LAZY)
-    private List<Document> documents;
-
-    public Professional(){}
-
-    // Getters & Setters
+    private List<Task> tasks;
 }

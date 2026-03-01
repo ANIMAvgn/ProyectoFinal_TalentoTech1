@@ -1,9 +1,9 @@
 package com.prisma.psicologia.dto;
+
 import lombok.*;
 
 @Getter
 @Setter
-public class LoginRequest {
+public class ForgotPasswordRequest {
     private String email;
-    private String password;
 }
