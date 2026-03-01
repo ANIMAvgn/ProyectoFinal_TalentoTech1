@@ -1,7 +1,5 @@
 package com.prisma.psicologia.model;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -12,23 +10,15 @@ import lombok.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "appointments")
-public class Appointment {
+@Table(name = "tasks")
+public class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDate fecha;
-
-    private LocalTime hora;
-
-    private String lugar;
-
-    private Boolean asistio;
-
-    @Column(columnDefinition = "TEXT")
-    private String notas;
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String descripcion;
 
     @ManyToOne
     @JoinColumn(name = "patient_id", nullable = false)
@@ -39,5 +29,5 @@ public class Appointment {
     private Professional professional;
 
     @CreationTimestamp
-    private LocalDateTime createdAt;
+    private LocalDateTime fechaCreacion;
 }

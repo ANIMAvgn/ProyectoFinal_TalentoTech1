@@ -1,8 +1,12 @@
 package com.prisma.psicologia.model;
 
 
-import jakarta.persistence.*;
 
+import jakarta.persistence.*;
+import lombok.*;
+
+@Getter
+@Setter
 @Entity
 @Table(name = "roles")
 public class Role {
@@ -11,13 +15,7 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, unique = true)
-    private RoleName name;
+    @Column(nullable = false, unique = true, length = 30)
+    private String name; // ADMIN, PROFESSIONAL, PATIENT
 
-    
-
-    public Role() {}
-
-    // getters & setters
 }

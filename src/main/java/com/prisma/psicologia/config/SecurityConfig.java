@@ -8,26 +8,28 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-@Configuration //se carga automáticamente al iniciar la app
-@EnableMethodSecurity // activa la seguridad por anotaciones en métodos
+@Configuration
+@EnableMethodSecurity
 public class SecurityConfig {
+
     @Bean
-    public PasswordEncoder passwordEncoder(){ //crea un objeto global para encriptar contraseñas
+    public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
+
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
         http
-        .csrf(csrf -> csrf.disable()) // si no se desactiva falla POST/PUT/DELETE
-        .authorizeHttpRequests(auth -> auth
-        .requestMatchers("/api/users/{id}").permitAll()
-         .requestMatchers("/api/users").permitAll()
-        .requestMatchers("/api/users/login").permitAll()
-        .requestMatchers("/api/users/register").permitAll()
-        .anyRequest().authenticated())
-        .formLogin(form -> form.disable())
-        .httpBasic(basic -> basic.disable());
-        return http.build(); 
-          
+            .csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/admin/generate-hash/**").permitAll()
+                .requestMatchers("/auth/**").permitAll()
+                .anyRequest().authenticated()
+            )
+            .formLogin(form -> form.disable())
+            .httpBasic(basic -> basic.disable());
+
+        return http.build();
     }
 }
