@@ -1,1 +1,23 @@
-<p>appointment-booking works!</p>
+<h3>Disponibilidad</h3>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Fecha</th>
+      <th>Hora</th>
+      <th>Acción</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let cita of appointments">
+      <td>{{ cita.fecha }}</td>
+      <td>{{ cita.hora }}</td>
+      <td>
+        <button class="btn btn-primary btn-sm">
+          Reservar
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
