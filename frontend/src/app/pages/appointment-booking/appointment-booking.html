@@ -1,1 +1,53 @@
-<p>appointment-booking works!</p>
+<div class="container mt-4">
+
+  <h2 class="mb-4">Citas Disponibles</h2>
+
+  <div *ngFor="let pro of professionals" class="card mb-4 shadow-sm">
+
+    <div class="card-header bg-primary text-white">
+      {{ pro.nombre }}
+    </div>
+
+    <div class="card-body">
+
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Estado</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let slot of pro.disponibilidad">
+            <td>{{ slot.fecha }}</td>
+            <td>{{ slot.hora }}</td>
+            <td>
+              <span
+                class="badge"
+                [ngClass]="{
+                  'bg-success': slot.estado === 'DISPONIBLE',
+                  'bg-danger': slot.estado === 'RESERVADA'
+                }">
+                {{ slot.estado }}
+              </span>
+            </td>
+            <td>
+              <button
+                class="btn btn-sm btn-outline-primary"
+                [disabled]="slot.estado === 'RESERVADA'">
+                Reservar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>
