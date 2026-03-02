@@ -17,7 +17,7 @@ public class AdminController {
     private final AdminService adminService;
     private final PasswordEncoder passwordEncoder;
 
-    // @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/users")
     public ResponseEntity<UserResponse> createUser(
             @RequestBody CreateUserRequest request) {

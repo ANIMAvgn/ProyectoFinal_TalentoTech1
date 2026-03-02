@@ -4,10 +4,7 @@ spring:
     username: postgres
     password: 1234
 
-  security:
-    user:
-      name: admin
-      password: 1234
+  
 
   jpa:
     hibernate:

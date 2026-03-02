@@ -15,9 +15,9 @@ public class Professional {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "user_id", nullable = false, unique = true)
-    private User user;
+   @OneToOne(fetch = FetchType.LAZY)
+   @JoinColumn(name="user_id", nullable=false, unique=true)
+   private User user;
 
     // Un profesional tiene muchos pacientes
     @OneToMany(mappedBy = "professional", fetch = FetchType.LAZY)

@@ -60,10 +60,10 @@ public class User {
     private LocalDateTime updatedAt;
 
     // Relación 1-1 opcional
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private Patient patient;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY) 
+    private Patient patient; 
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY) 
     private Professional professional;
 
 }
