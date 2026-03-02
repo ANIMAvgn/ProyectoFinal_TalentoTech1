@@ -10,19 +10,23 @@ import { CommonModule } from '@angular/common';
 })
 export class AppointmentBooking {
 
-  professionalId!: number;
-
-  appointments = [
-    { id: 1, hora: '10:00 AM', estado: 'DISPONIBLE' },
-    { id: 2, hora: '11:00 AM', estado: 'DISPONIBLE' },
-    { id: 3, hora: '12:00 PM', estado: 'RESERVADA' }
+  professionals = [
+    {
+      id: 1,
+      nombre: 'Dra. Ana Pérez',
+      disponibilidad: [
+        { fecha: '2026-03-10', hora: '10:00 AM', estado: 'DISPONIBLE' },
+        { fecha: '2026-03-10', hora: '11:00 AM', estado: 'RESERVADA' }
+      ]
+    },
+    {
+      id: 2,
+      nombre: 'Dr. Carlos López',
+      disponibilidad: [
+        { fecha: '2026-03-11', hora: '09:00 AM', estado: 'DISPONIBLE' },
+        { fecha: '2026-03-11', hora: '10:00 AM', estado: 'DISPONIBLE' }
+      ]
+    }
   ];
 
-  constructor(private route: ActivatedRoute) {
-    this.professionalId = Number(this.route.snapshot.paramMap.get('id'));
-  }
-
-  book(id: number) {
-    alert('Cita reservada con éxito');
-  }
 }
