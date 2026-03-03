@@ -21,7 +21,7 @@ public class Patient {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "professional_id", nullable = false)
+    @JoinColumn(name = "professional_id", nullable = true)
     private Professional professional;
 
     @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)

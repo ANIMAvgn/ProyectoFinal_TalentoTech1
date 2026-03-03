@@ -6,13 +6,14 @@ import org.springframework.stereotype.Service;
 
 import com.prisma.psicologia.dto.CreateUserRequest;
 import com.prisma.psicologia.dto.UserResponse;
-import com.prisma.psicologia.model.*;
-import com.prisma.psicologia.repository.UserRepository;
-import com.prisma.psicologia.repository.RoleRepository;
+import com.prisma.psicologia.model.Patient;
+import com.prisma.psicologia.model.Professional;
+import com.prisma.psicologia.model.Role;
+import com.prisma.psicologia.model.User;
 import com.prisma.psicologia.repository.PatientRepository;
 import com.prisma.psicologia.repository.ProfessionalRepository;
-
-
+import com.prisma.psicologia.repository.RoleRepository;
+import com.prisma.psicologia.repository.UserRepository;
 
 @Service
 @RequiredArgsConstructor
@@ -26,58 +27,53 @@ public class AdminService {
 
     public UserResponse createUser(CreateUserRequest request) {
 
-        // 🔹 Validar email único
-        if (userRepository.existsByEmail(request.getEmail())) {
+        // ✅ Normalizaciones
+        String emailNorm = request.getEmail() == null ? null : request.getEmail().trim().toLowerCase();
+        String roleNameReq = request.getRole() == null ? "" : request.getRole().trim().toUpperCase();
+        String tipoDocNorm = request.getTipoDocumento() == null ? null : request.getTipoDocumento().trim().toUpperCase();
+        String numeroDocNorm = request.getNumeroDocumento() == null ? null : request.getNumeroDocumento().trim();
+
+        // Validar email único (ya normalizado)
+        if (emailNorm != null && userRepository.existsByEmail(emailNorm)) {
             throw new RuntimeException("El correo ya está registrado");
         }
 
-        // 🔹 Validar número de documento único
-        if (userRepository.existsByNumeroDocumento(request.getNumeroDocumento())) {
+        // Validar número de documento único (normalizado)
+        if (numeroDocNorm != null && userRepository.existsByNumeroDocumento(numeroDocNorm)) {
             throw new RuntimeException("El número de documento ya está registrado");
         }
 
-        // 🔹 Buscar rol
-        Role role = roleRepository.findByName(request.getRole().toUpperCase())
-                .orElseThrow(() -> new RuntimeException("Rol inválido"));
+        // Buscar rol en BD (debe existir: ADMIN / PATIENT / PROFESSIONAL)
+        Role role = roleRepository.findByName(roleNameReq)
+                .orElseThrow(() -> new RuntimeException("Rol inválido: " + request.getRole()));
 
-        // 🔹 Crear usuario
+        // Crear usuario
         User user = new User();
-
         user.setNombre(request.getNombre());
         user.setApellido(request.getApellido());
-        user.setTipoDocumento(request.getTipoDocumento());
-        user.setNumeroDocumento(request.getNumeroDocumento());
+        user.setTipoDocumento(tipoDocNorm);
+        user.setNumeroDocumento(numeroDocNorm);
         user.setCelular(request.getCelular());
         user.setCiudad(request.getCiudad());
         user.setDireccion(request.getDireccion());
-        user.setEmail(request.getEmail());
+        user.setEmail(emailNorm);
         user.setPasswordHash(passwordEncoder.encode(request.getPassword()));
         user.setRole(role);
 
         userRepository.save(user);
 
-        // 🔹 Crear perfil según rol
-        if (role.getName().equals("PATIENT")) {
-
+        // Crear perfil según rol (sin depender de mayúsculas/espacios)
+        if ("PATIENT".equals(roleNameReq)) {
             Patient patient = new Patient();
             patient.setUser(user);
-
-            // ⚠ IMPORTANTE:
-            // Aquí debes asignar un profesional antes de guardar
-            // patient.setProfessional(professionalAsignado);
-
+            // ✅ NO se asigna profesional aquí (lo elige el paciente después)
             patientRepository.save(patient);
-
             user.setPatient(patient);
-        }
 
-        if (role.getName().equals("PROFESSIONAL")) {
-
+        } else if ("PROFESSIONAL".equals(roleNameReq)) {
             Professional professional = new Professional();
             professional.setUser(user);
-
             professionalRepository.save(professional);
-
             user.setProfessional(professional);
         }
 

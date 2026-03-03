@@ -12,6 +12,7 @@ import com.prisma.psicologia.dto.ResetPasswordRequest;
 import com.prisma.psicologia.service.AuthService;
 
 import lombok.RequiredArgsConstructor;
+ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/auth")
@@ -20,10 +21,15 @@ public class AuthController {
 
     private final AuthService authService;
 
-    @PostMapping("/login")
-    public LoginResponse login(@RequestBody LoginRequest request) {
-        return authService.login(request);
-    }
+
+   
+
+@PostMapping("/login")
+public LoginResponse login(@Valid @RequestBody LoginRequest request) {
+    return authService.login(request);
+}
+
+  
 
     @PostMapping("/forgot-password")
     public void forgotPassword(@RequestBody ForgotPasswordRequest request) {
