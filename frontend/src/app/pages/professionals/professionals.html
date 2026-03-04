@@ -1,0 +1,9 @@
+<h2>Profesionales disponibles</h2>
+
+<div *ngFor="let pro of professionals">
+  <h3>{{ pro.nombre }} {{ pro.apellido }}</h3>
+  <p>{{ pro.especialidad }}</p>
+  <button (click)="goToBooking(pro.id)">
+    Ver disponibilidad
+  </button>
+</div>
