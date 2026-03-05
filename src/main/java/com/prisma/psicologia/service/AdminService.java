@@ -1,5 +1,8 @@
 package com.prisma.psicologia.service;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -7,22 +10,29 @@ import com.prisma.psicologia.dto.CreateUserRequest;
 import com.prisma.psicologia.dto.UserResponse;
 import com.prisma.psicologia.model.Patient;
 import com.prisma.psicologia.model.Professional;
+import com.prisma.psicologia.model.ProfessionalMonthlyShift;
 import com.prisma.psicologia.model.Role;
 import com.prisma.psicologia.model.User;
+import com.prisma.psicologia.model.WorkShift;
 import com.prisma.psicologia.repository.PatientRepository;
+import com.prisma.psicologia.repository.ProfessionalMonthlyShiftRepository;
 import com.prisma.psicologia.repository.ProfessionalRepository;
 import com.prisma.psicologia.repository.RoleRepository;
 import com.prisma.psicologia.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
+
 @Service
 @RequiredArgsConstructor
 public class AdminService {
+
+    private static final ZoneId CO_ZONE = ZoneId.of("America/Bogota");
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PatientRepository patientRepository;
     private final ProfessionalRepository professionalRepository;
+    private final ProfessionalMonthlyShiftRepository monthlyShiftRepository; // ✅ NUEVO
     private final PasswordEncoder passwordEncoder;
 
     public UserResponse createUser(CreateUserRequest request) {
@@ -62,8 +72,9 @@ public class AdminService {
 
         userRepository.save(user);
 
-        // Crear perfil según rol (sin depender de mayúsculas/espacios)
+        // Crear perfil según rol
         if ("PATIENT".equals(roleNameReq)) {
+
             Patient patient = new Patient();
             patient.setUser(user);
             // ✅ NO se asigna profesional aquí (lo elige el paciente después)
@@ -71,10 +82,28 @@ public class AdminService {
             user.setPatient(patient);
 
         } else if ("PROFESSIONAL".equals(roleNameReq)) {
+
             Professional professional = new Professional();
             professional.setUser(user);
             professionalRepository.save(professional);
             user.setProfessional(professional);
+
+            // ✅ Jornada por defecto MORNING para el mes actual (Colombia)
+            LocalDate today = LocalDate.now(CO_ZONE);
+
+            // evitar duplicado si por alguna razón ya existe configuración para este mes
+            boolean exists = monthlyShiftRepository
+                    .findByProfessionalIdAndYearAndMonth(professional.getId(), today.getYear(), today.getMonthValue())
+                    .isPresent();
+
+            if (!exists) {
+                ProfessionalMonthlyShift shift = new ProfessionalMonthlyShift();
+                shift.setProfessional(professional);
+                shift.setYear(today.getYear());
+                shift.setMonth(today.getMonthValue());
+                shift.setShift(WorkShift.MORNING);
+                monthlyShiftRepository.save(shift);
+            }
         }
 
         return new UserResponse(
