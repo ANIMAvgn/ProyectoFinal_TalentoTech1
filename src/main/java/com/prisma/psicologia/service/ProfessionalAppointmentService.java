@@ -56,6 +56,10 @@ public class ProfessionalAppointmentService {
         appointmentRepository.save(appt);
     }
 
-
+    
    
 }
+
+// Cancelacion de citas desde el profesional
+
+// POST /professional/appointments/{id}/cancel

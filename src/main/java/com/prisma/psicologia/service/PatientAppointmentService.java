@@ -214,3 +214,12 @@ public class PatientAppointmentService {
     bookAppointment(email, req);
 }
 }
+
+// Canelacion de citas desde el paciente
+
+// @PostMapping("/{id}/cancel")
+
+// POST http://localhost:8081/patient/appointments/{id}/cancel
+
+// Authorization: Bearer TOKEN_DEL_PROFESIONAL
+

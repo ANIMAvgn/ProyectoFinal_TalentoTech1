@@ -15,3 +15,11 @@ public class SlotsResponse {
     private String shift;    // MORNING/AFTERNOON/FULL
     private List<String> availableSlots; // ["07:00","08:00",...]
 }
+
+// “¿Qué horas están disponibles para agendar con este profesional el día X?”
+
+// /patient/professionals/{id}/slots
+
+// http://localhost:8081/patient/professionals/1/slots?date=2026-03-10
+
+// Authorization: Bearer TOKEN_DEL_PACIENTE

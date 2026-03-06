@@ -15,3 +15,13 @@ public class BookApointmentRequest {
     @NotNull(message = "startAt es obligatorio")
     private String startAt;
 }
+
+
+// Es para reservar una cita como paciente
+
+// POST /patient/appointments/book
+
+// {
+//   "professionalId": 3,
+//   "startAt": "2026-03-10T08:00:00-05:00"
+// }
