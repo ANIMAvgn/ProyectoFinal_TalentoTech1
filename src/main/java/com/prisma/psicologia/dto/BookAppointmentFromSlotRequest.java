@@ -22,3 +22,5 @@ public class BookAppointmentFromSlotRequest {
 }
 
 // Este DTO BookAppointmentFromSlotRequest sirve para que el paciente reserve una cita usando uno de los slots que el backend le devolvió. Es más simple que enviar startAt completo porque el frontend solo manda fecha + hora.
+
+// No lo estamos usando por el momento

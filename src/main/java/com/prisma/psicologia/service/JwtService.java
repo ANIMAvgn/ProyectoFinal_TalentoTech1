@@ -1,6 +1,8 @@
 package com.prisma.psicologia.service;
 
 import java.security.Key;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.Date;
 
 import org.springframework.stereotype.Service;
@@ -35,13 +37,14 @@ public class JwtService {
         return extractAllClaims(token).getSubject();
     }
 
-    public String extractRole(String token) {
-        return extractAllClaims(token).get("role", String.class);
-    }
-
     public boolean isTokenValid(String token, User user) {
         final String email = extractEmail(token);
-        return (email.equals(user.getEmail()) && !isTokenExpired(token));
+        return email.equals(user.getEmail()) && !isTokenExpired(token);
+    }
+
+    public OffsetDateTime extractExpiration(String token) {
+        Date exp = extractAllClaims(token).getExpiration();
+        return exp.toInstant().atOffset(ZoneOffset.UTC);
     }
 
     private boolean isTokenExpired(String token) {

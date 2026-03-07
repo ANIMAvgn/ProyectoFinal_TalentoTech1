@@ -20,6 +20,6 @@ public class SlotsResponse {
 
 // /patient/professionals/{id}/slots
 
-// http://localhost:8081/patient/professionals/1/slots?date=2026-03-10
+//  GET http://localhost:8081/patient/professionals/1/slots?date=2026-03-10
 
 // Authorization: Bearer TOKEN_DEL_PACIENTE

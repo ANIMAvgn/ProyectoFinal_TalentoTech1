@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.prisma.psicologia.model.User;
+import com.prisma.psicologia.repository.BlacklistedTokenRepository;
 import com.prisma.psicologia.repository.UserRepository;
 import com.prisma.psicologia.service.JwtService;
 
@@ -26,6 +27,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final UserRepository userRepository;
+    private final BlacklistedTokenRepository blacklistedTokenRepository;
 
     @Override
     protected void doFilterInternal(
@@ -49,14 +51,25 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         String token = authHeader.substring(7);
-        String email = jwtService.extractEmail(token);
+
+        // ✅ token invalidado por logout
+        if (blacklistedTokenRepository.existsByToken(token)) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        String email;
+        try {
+            email = jwtService.extractEmail(token);
+        } catch (Exception e) {
+            filterChain.doFilter(request, response);
+            return;
+        }
 
         if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-
             User user = userRepository.findByEmailWithRole(email).orElse(null);
 
             if (user != null && jwtService.isTokenValid(token, user)) {
-
                 String roleName = user.getRole().getName();
 
                 var authorities = List.of(
@@ -67,7 +80,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         new UsernamePasswordAuthenticationToken(user.getEmail(), null, authorities);
 
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }
