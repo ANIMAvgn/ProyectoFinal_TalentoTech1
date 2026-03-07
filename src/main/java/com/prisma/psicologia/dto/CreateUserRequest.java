@@ -49,3 +49,19 @@ public class CreateUserRequest {
     @Pattern(regexp = "PATIENT|PROFESSIONAL", message = "role debe ser PATIENT o PROFESSIONAL")
     private String role;
 }
+
+
+// http://localhost:8081/admin/users
+
+// {
+//   "nombre": "Juan",
+//   "apellido": "Osorio",
+//   "tipoDocumento": "CC",
+//   "numeroDocumento": "1000001010",
+//   "celular": "3001112233",
+//   "email": "juan.osorio@correo.com",
+//   "ciudad": "Medellin",
+//   "direccion": "Calle 10 #20-30",
+//   "password": "123456",
+//   "role": "PROFESSIONAL"
+// }

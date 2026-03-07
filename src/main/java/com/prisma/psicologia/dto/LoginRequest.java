@@ -18,3 +18,7 @@ public class LoginRequest {
     @Size(min = 6, message = "La contraseña debe tener mínimo 6 caracteres")
     private String password;
 }
+
+// POST http://localhost:8081/auth/login
+
+// EMAIL, PASSWORD

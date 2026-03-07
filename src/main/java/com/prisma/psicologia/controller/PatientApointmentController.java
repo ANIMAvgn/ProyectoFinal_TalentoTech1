@@ -1,11 +1,14 @@
 package com.prisma.psicologia.controller;
 
+import java.util.List;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import com.prisma.psicologia.dto.BookApointmentRequest;
 import com.prisma.psicologia.dto.BookAppointmentFromSlotRequest;
+import com.prisma.psicologia.dto.PatientAppointmentItemResponse;
 import com.prisma.psicologia.service.PatientAppointmentService;
 
 import jakarta.validation.Valid;
@@ -17,6 +20,13 @@ import lombok.RequiredArgsConstructor;
 public class PatientApointmentController {
 
     private final PatientAppointmentService patientAppointmentService;
+
+
+    @PreAuthorize("hasRole('PATIENT')")
+    @GetMapping
+    public List<PatientAppointmentItemResponse> myAppointments(Authentication auth) {
+         return patientAppointmentService.getMyAppointments(auth.getName());
+    }
 
     @PreAuthorize("hasRole('PATIENT')")
     @PostMapping("/{id}/cancel")
