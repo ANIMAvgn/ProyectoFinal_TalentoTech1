@@ -18,4 +18,17 @@ export class AuthService {
     });
   }
 
+  logout() {
+    const token = localStorage.getItem('token');
+
+    return this.http.post(
+      'http://localhost:8081/auth/logout',
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+  }
 }

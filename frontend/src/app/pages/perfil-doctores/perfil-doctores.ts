@@ -3,11 +3,11 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
-  selector: 'app-perfil',
-  templateUrl: './perfil.html',
-  styleUrl: './perfil.css'
+  selector: 'app-perfil-doctores',
+  templateUrl: './perfil-doctores.html',
+  styleUrl: './perfil-doctores.css'
 })
-export class Perfil {
+export class PerfilDoctores {
 
   constructor(
     private auth: AuthService,
