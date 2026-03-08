@@ -13,7 +13,7 @@ export const routes: Routes = [
   { path: '', component: LandingComponent },   // landing page
   { path: 'login', component: LoginComponent },
   { path: 'professionals', component: Professionals },
-  { path: 'booking/:id', component: AppointmentBooking },
+  { path: 'appointment-booking', component: AppointmentBooking },
   { path: 'perfil', component: Perfil },                // admin
   { path: 'perfil-pacientes', component: PerfilPacientes }, // patient
   { path: 'perfil-doctores', component: PerfilDoctores }    // doctor
