@@ -61,5 +61,18 @@ export class AppointmentService {
     );
   }
 
-}
+  getMyAppointments(){
 
+    const token = localStorage.getItem("token");
+
+    return this.http.get(
+      `${this.api}/patient/appointments`,
+      {
+        headers:{
+          Authorization:`Bearer ${token}`
+        }
+      }
+    );
+
+  }
+}

@@ -1,19 +1,48 @@
+<!-- NAVBAR SOLO SI ESTÁ LOGGEADO -->
 <nav *ngIf="isLoggedIn()" class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
-    <a class="navbar-brand">Psicología App</a>
 
-    <div>
-      <a routerLink="/professionals" class="btn btn-outline-light me-2">Profesionales</a>
-      <a *ngIf="role === 'PATIENT'" routerLink="/my-appointments" class="btn btn-outline-light me-2">Mis Citas</a>
-      <a *ngIf="role === 'PROFESSIONAL'" routerLink="/professional-appointments" class="btn btn-outline-light me-2">Mis Citas</a>
-      <a routerLink="/perfil" class="btn btn-outline-light">Perfil</a>
-      <a *ngIf="role === 'PATIENT'"
-      routerLink="/appointment-booking"
-      class="btn btn-outline-light">Reservar Cita</a>
+    <a class="navbar-brand">PRISMA App</a>
+
+    <div class="d-flex gap-2">
+
+      <!-- MIS CITAS PACIENTE -->
+      <a
+        *ngIf="role === 'PATIENT'"
+        routerLink="/my-appointments"
+        class="btn btn-outline-light"
+      >
+        Mis Citas
+      </a>
+
+      <!-- MIS CITAS PROFESIONAL -->
+      <a
+        *ngIf="role === 'PROFESSIONAL'"
+        routerLink="/professional-appointments"
+        class="btn btn-outline-light"
+      >
+        Mis Citas
+      </a>
+
+      <!-- PERFIL -->
+      <a routerLink="/perfil" class="btn btn-outline-light">
+        Perfil
+      </a>
+
+      <!-- RESERVAR -->
+      <a
+        *ngIf="role === 'PATIENT'"
+        routerLink="/appointment-booking"
+        class="btn btn-outline-light"
+      >
+        Reservar Cita
+      </a>
+
     </div>
   </div>
 </nav>
 
+<!-- CONTENIDO DE TODAS LAS PÁGINAS -->
 <div class="container mt-4">
   <router-outlet></router-outlet>
 </div>

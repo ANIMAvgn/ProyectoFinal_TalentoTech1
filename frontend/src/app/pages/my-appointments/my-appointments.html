@@ -1,0 +1,51 @@
+<div class="container mt-4">
+
+<h2 class="mb-4">Mis Citas</h2>
+
+<table class="table table-striped">
+
+<thead>
+
+<tr>
+<th>Fecha</th>
+<th>Profesional</th>
+<th>Email</th>
+<th>Estado</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr *ngFor="let appt of appointments">
+
+<td>{{appt.startAt}}</td>
+
+<td>
+Dr. {{appt.professionalNombre}}
+{{appt.professionalApellido}}
+</td>
+
+<td>{{appt.professionalEmail}}</td>
+
+<td>
+
+<span
+class="badge"
+[ngClass]="{
+'bg-success': appt.status === 'BOOKED',
+'bg-danger': appt.status === 'CANCELLED'
+}"
+>
+{{appt.status}}
+</span>
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
