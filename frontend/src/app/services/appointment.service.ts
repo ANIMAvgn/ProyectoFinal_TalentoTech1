@@ -47,8 +47,12 @@ export class AppointmentService {
     const token = localStorage.getItem("token");
 
     return this.http.post(
-      `${this.api}/patient/appointments/book`,
-      { professionalId, date, time },
+      `${this.api}/patient/appointments/book-from-slot`,
+      {
+      professionalId: professionalId,
+      date: date,
+      time: time
+      },
       {
         headers: {
           Authorization: `Bearer ${token}`
@@ -58,3 +62,4 @@ export class AppointmentService {
   }
 
 }
+

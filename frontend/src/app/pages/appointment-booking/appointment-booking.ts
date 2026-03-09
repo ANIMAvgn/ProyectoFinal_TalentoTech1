@@ -56,16 +56,27 @@ export class AppointmentBooking implements OnInit {
 
   reservar(professionalId:number, time:string){
 
-  this.appointmentService.bookSlot(
-    professionalId,
-    this.selectedDate,
-    time
-  ).subscribe(() => {
+  this.appointmentService
+  .bookSlot(professionalId, this.selectedDate, time)
+  .subscribe({
 
-    alert("Cita reservada");
-    this.loadProfessionals();
+    next: () => {
+
+      alert("Cita reservada correctamente");
+
+      // recargar slots para actualizar disponibilidad
+      this.loadProfessionals();
+
+    },
+
+    error: (err) => {
+
+      alert(err.error?.message || "No se pudo reservar la cita");
+
+    }
 
   });
 
-}
+  }
+
 }
