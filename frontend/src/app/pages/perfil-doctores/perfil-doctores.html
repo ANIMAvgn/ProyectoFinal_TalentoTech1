@@ -1,184 +1,114 @@
-<!-- <p>perfil works!</p> -->
-<div class="profile-page ">
-  <div class="top-profile border border-0 ">
-    <div class="primary-info w-25 bg-body-secondary m-3">
+<div class="profile-page">
 
-      <div class="top-profile--avatar">
-        <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0YsgBw5MLXuXwWACiRUhdny4i74PjrzaGKQ&s"
-          alt=""
-          srcset=""
-        />
-      </div>
+  <div class="profile-header">
 
-      <div class="d-flex flex-column align-items-center text-center">
-
-        <div class="top-profile--username">
-          <h2>DOCTOR</h2>
-        </div>
-
-        <button 
-          class="btn btn-danger btn-sm mt-2"
-          (click)="logout()"
-        >
-          Cerrar sesión
-        </button>
-
-        <p class="text-secondary mb-1">Role</p>
-
-        <div class="h-100 p-2">
-          <p class="break-word lh-1 text-center">
-            Soy psicólogo graduado de la Universidad Católica de Oriente, con experiencia en diferentes contextos enfocados al área clínica. 
-            En cada ser humano reside una historia única, un universo de emociones, pensamientos y sueños. 
-            Mi misión es brindarte un espacio seguro y comprensivo para explorar y entender esos universos interiores. 
-            Juntos, navegaremos por tus desafíos, te ayudaré a descubrir tus fortalezas y a cultivar herramientas para una vida más plena y armoniosa. 
-            Si estás listo para iniciar este viaje transformador, estoy aquí para acompañarte.
-          </p>
-        </div>
-
-        <div class="skills p-2">
-          <h5>Habilidades en:</h5>
-          <span class="badge text-bg-secondary m-1">Ansiedad</span>
-          <span class="badge text-bg-secondary m-1">Depresion</span>
-          <span class="badge text-bg-secondary m-1">EPT</span>
-        </div>
-    
-      </div>
+    <div class="avatar">
+      <img src="https://randomuser.me/api/portraits/men/32.jpg">
     </div>
 
-    <div class="second-info w-75 col-md-8 ">
+    <div class="profile-main">
 
-      <div class="basic-information p-2 card m-3 border-0 bg-body-secondary">
-        <h4 class="m-2">Basic information</h4>
-        <div class="container text-center">
+      <h2>Dr. Juan Díaz</h2>
 
-          <div class="row text-start lh-1 text-body-tertiary" >
-                    <div class="col ">
-                      Tipo de documento
-                    </div>
+      <p class="role">Psicólogo clínico</p>
 
-                    <div class="col">
-                      Número de documento
-                    </div>
+      <button 
+        class="btn btn-light btn-sm mt-2"
+        (click)="logout()"
+      >
+        Cerrar sesión
+      </button>
 
-                    <div class="col">
-                      Celular
-                    </div>
-
-          </div>
-
-          <div class="row text-start" >
-
-                    <div class="col">
-                      CC
-                    </div>
-
-                    <div class="col">
-                      1010101010
-                    </div>
-
-                    <div class="col">
-                      300700200
-                    </div>
-
-          </div>
-
-          <div class="row text-start mt-4 lh-1 text-body-tertiary" >
-
-                    <div class="col">
-                      Ciudad
-                    </div>
-
-                    <div class="col">
-                      Direccion
-                    </div>
-
-                    <div class="col">
-                      Email
-                    </div>
-
-          </div>
-
-          <div class="row text-start mb-2" >
-
-                    <div class="col">
-                      Medellin
-                    </div>
-
-                    <div class="col">
-                      Carrera 123 #12 - 34
-                    </div>
-
-                    <div class="col">
-                      prueba@gmail.com
-                    </div>
-
-          </div>
-
-        </div>
-      </div>
-
-      <div class="experience-info  m-3">
-        <div class="row">
-          <h4>Experiencia <span>(4)</span></h4>
-            <div class="experience-letter bg-primary text-white rounded-circle d-flex align-items-center justify-content-center m-3 mx-4">
-              <span class="experience-initials">JD</span>
-            </div>
-            <div class="experience-info col w-75">
-              <div class="my-4 lh-sm">
-                <div class="text-primary fs-4" >Psicologia.co</div>
-                <div class="" >Psicologo clínico</div>
-                <div class="">2025 - 2026</div>
-              </div>
-              <span class="separator"></span>
-            </div>
-        </div>
-
-        <div class="row">
-          <div class="experience-letter bg-primary text-white rounded-circle d-flex align-items-center justify-content-center m-3 mx-4">
-            <span class="experience-initials">JD</span>
-          </div>
-          <div class="experience-info col w-75">
-              <div class="my-4 lh-sm">
-                <div class="text-primary fs-4" >Entiende tu mente</div>
-                <div class="" >Psicologo Analítico</div>
-                <div class="">2024-2025</div>
-              </div>
-              <span class="separator"></span>
-            </div>
-        </div>
-
-        <div class="row">
-          <div class="experience-letter bg-primary text-white rounded-circle d-flex align-items-center justify-content-center m-3 mx-4">
-            <span class="experience-initials">JD</span>
-          </div>
-          <div class="experience-info col w-75">
-              <div class="my-4 lh-sm">
-                <div class="text-primary fs-4" >Creando conciencia</div>
-                <div class="" >Practicante mental</div>
-                <div class="">2023-2024</div>
-              </div>
-              <span class="separator"></span>
-          </div>
-        </div>
-
-         <div class="row">
-          <div class="experience-letter bg-primary text-white rounded-circle d-flex align-items-center justify-content-center m-3 mx-4">
-            <span class="experience-initials">JD</span>
-          </div>
-          <div class="experience-info col w-75">
-              <div class="my-4 lh-sm">
-                <div class="text-primary fs-4" >Eureka!</div>
-                <div class="" >Aux. psiquico</div>
-                <div class="">2022-2023</div>
-              </div>
-              <!-- <span class="separator"></span> -->
-          </div>
-        </div>
-          
-          
-      </div>
     </div>
+
   </div>
-  <div class="detail-profile"></div>
+
+
+  <div class="profile-content">
+
+    <!-- INFORMACIÓN -->
+    <div class="card profile-card">
+
+      <h4>Información profesional</h4>
+
+      <div class="info-grid">
+
+        <div>
+          <label>Especialidad</label>
+          <p>Psicología clínica</p>
+        </div>
+
+        <div>
+          <label>Experiencia</label>
+          <p>5 años</p>
+        </div>
+
+        <div>
+          <label>Ciudad</label>
+          <p>Medellín</p>
+        </div>
+
+        <div>
+          <label>Email</label>
+          <p>juandiaz@email.com</p>
+        </div>
+
+        <div>
+          <label>Consultorio</label>
+          <p>PRISMA Psicología</p>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- DISPONIBILIDAD -->
+    <div class="card profile-card">
+
+      <h4>Disponibilidad</h4>
+
+      <div class="admin-actions">
+
+        <div class="admin-item">
+          Lunes 8:00 AM - 12:00 PM
+        </div>
+
+        <div class="admin-item">
+          Miércoles 2:00 PM - 6:00 PM
+        </div>
+
+        <div class="admin-item">
+          Viernes 9:00 AM - 1:00 PM
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- PACIENTES -->
+    <div class="card profile-card">
+
+      <h4>Pacientes asignados</h4>
+
+      <div class="experience">
+
+        <div class="experience-item">
+
+          <div class="experience-circle">AM</div>
+
+          <div>
+            <div class="text-primary fs-5">Ana Martínez</div>
+            <div class="text-muted">Consulta próxima: 20 Abril</div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
 </div>
