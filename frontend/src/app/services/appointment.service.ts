@@ -42,24 +42,23 @@ export class AppointmentService {
   );
 }
 
-  bookSlot(professionalId: number, date: string, time: string) {
+  bookSlot(professionalId: number, startAt: string) {
 
-    const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
-    return this.http.post(
-      `${this.api}/patient/appointments/book-from-slot`,
-      {
-      professionalId: professionalId,
-      date: date,
-      time: time
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
+  return this.http.post(
+    `${this.api}/patient/appointments/book`,
+    {
+      professionalId,
+      startAt
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
       }
-    );
-  }
+    }
+  );
+}
 
   getMyAppointments(){
 

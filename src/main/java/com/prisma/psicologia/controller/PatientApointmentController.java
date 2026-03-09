@@ -34,7 +34,7 @@ public class PatientApointmentController {
         patientAppointmentService.cancelAppointment(auth.getName(), id);
     }
 
-    // ✅ NUEVO: reservar cita
+    //Reservar cita
     @PreAuthorize("hasRole('PATIENT')")
     @PostMapping("/book")
     public void book(Authentication auth, @Valid @RequestBody BookApointmentRequest request) {

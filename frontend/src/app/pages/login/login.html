@@ -1,24 +1,34 @@
 <div class="container mt-5" style="max-width:400px">
 
-  <h3>Login</h3>
+  <form (ngSubmit)="login()">
 
-  <input
-  class="form-control mb-3"
-  placeholder="Email"
-  [(ngModel)]="email">
+    <h3 class="mb-4 text-center">Login</h3>
 
-  <input
-  type="password"
-  class="form-control mb-3"
-  placeholder="Password"
-  [(ngModel)]="password">
+    <input
+      type="email"
+      class="form-control mb-3"
+      placeholder="Email"
+      name="email"
+      [(ngModel)]="email"
+      required
+    >
 
-  <button
-  class="btn btn-dark w-100"
-  (click)="login()">
+    <input
+      type="password"
+      class="form-control mb-3"
+      placeholder="Password"
+      name="password"
+      [(ngModel)]="password"
+      required
+    >
 
-  Login
+    <button
+      type="submit"
+      class="btn btn-dark w-100"
+    >
+      Login
+    </button>
 
-  </button>
+  </form>
 
 </div>

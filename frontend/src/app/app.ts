@@ -1,10 +1,11 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NgIf } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NgIf],
+  imports: [RouterOutlet, NgIf, RouterModule],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
@@ -23,6 +24,21 @@ export class App {
   isLoggedIn(): boolean {
     if (typeof window === 'undefined') return false;
     return !!localStorage.getItem('token');
+  }
+
+  getProfileRoute() {
+
+  const role = localStorage.getItem('role');
+
+  if (role === 'PATIENT') {
+    return '/perfil-pacientes';
+  }
+
+  if (role === 'PROFESSIONAL') {
+    return '/perfil-doctores';
+  }
+
+  return '/perfil'; // admin
   }
 
 }

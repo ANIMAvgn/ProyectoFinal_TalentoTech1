@@ -8,6 +8,7 @@ import { AppointmentBooking } from './pages/appointment-booking/appointment-book
 import { PerfilPacientes } from './pages/perfil-pacientes/perfil-pacientes';
 import { PerfilDoctores } from './pages/perfil-doctores/perfil-doctores';
 import { MyAppointments } from './pages/my-appointments/my-appointments';
+import { ProfessionalAppointments } from './pages/professional-appointments/professional-appointments';
 
 export const routes: Routes = [
   { path: '', component: LandingComponent },   // landing page
@@ -17,7 +18,8 @@ export const routes: Routes = [
   { path: 'perfil', component: Perfil },                // admin
   { path: 'perfil-pacientes', component: PerfilPacientes }, // patient
   { path: 'perfil-doctores', component: PerfilDoctores },   // doctor
-  { path:'my-appointments', component: MyAppointments }
+  { path:'my-appointments', component: MyAppointments },
+  { path:'professional-appointments', component: ProfessionalAppointments }
 ];
 
 @NgModule({
