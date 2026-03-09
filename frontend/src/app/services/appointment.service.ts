@@ -11,15 +11,50 @@ export class AppointmentService {
   constructor(private http: HttpClient) {}
 
   getProfessionals(date: string) {
-    return this.http.get(`${this.api}/patient/professionals?date=${date}`);
+
+    if (typeof window === 'undefined') {
+      return this.http.get(`${this.api}/patient/professionals?date=${date}`);
+    }
+
+    const token = localStorage.getItem("token");
+
+    return this.http.get(
+      `${this.api}/patient/professionals?date=${date}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
   }
 
+  getSlots(professionalId:number, date:string) {
+
+  const token = localStorage.getItem("token");
+
+  return this.http.get(
+    `${this.api}/patient/professionals/${professionalId}/slots?date=${date}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+}
+
   bookSlot(professionalId: number, date: string, time: string) {
-    return this.http.post(`${this.api}/patient/appointments/book-slot`, {
-      professionalId,
-      date,
-      time
-    });
+
+    const token = localStorage.getItem("token");
+
+    return this.http.post(
+      `${this.api}/patient/appointments/book`,
+      { professionalId, date, time },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
   }
 
 }
