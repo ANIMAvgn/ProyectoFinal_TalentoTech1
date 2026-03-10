@@ -38,9 +38,22 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .cors(cors -> {})
             .authorizeHttpRequests(auth -> auth
+
+                // permitir preflight
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
+                // login
                 .requestMatchers("/auth/**").permitAll()
-                .requestMatchers("/admin/**").permitAll()
+
+                // admin
+                .requestMatchers("/admin/**").hasAuthority("ADMIN")
+
+                // paciente
+                .requestMatchers("/patient/**").hasAuthority("PATIENT")
+
+                // profesional
+                .requestMatchers("/professional/**").hasAuthority("PROFESSIONAL")
+
                 .anyRequest().authenticated()
             )
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

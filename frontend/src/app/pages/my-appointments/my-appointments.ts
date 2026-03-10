@@ -22,14 +22,16 @@ export class MyAppointments implements OnInit {
 
   loadAppointments(){
 
-    this.appointmentService
-    .getMyAppointments()
-    .subscribe((data:any)=>{
+  this.appointmentService
+  .getMyAppointments()
+  .subscribe((data:any)=>{
 
+    setTimeout(()=>{
       this.appointments = data;
-
     });
 
-  }
+  });
+
+}
 
 }
