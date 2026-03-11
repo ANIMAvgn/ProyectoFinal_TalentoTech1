@@ -1,7 +1,6 @@
 package com.prisma.psicologia.service;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,38 +25,31 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AdminService {
 
-    private static final ZoneId CO_ZONE = ZoneId.of("America/Bogota");
-
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PatientRepository patientRepository;
     private final ProfessionalRepository professionalRepository;
-    private final ProfessionalMonthlyShiftRepository monthlyShiftRepository; // ✅ NUEVO
+    private final ProfessionalMonthlyShiftRepository professionalMonthlyShiftRepository;
     private final PasswordEncoder passwordEncoder;
 
     public UserResponse createUser(CreateUserRequest request) {
 
-        // ✅ Normalizaciones
         String emailNorm = request.getEmail() == null ? null : request.getEmail().trim().toLowerCase();
         String roleNameReq = request.getRole() == null ? "" : request.getRole().trim().toUpperCase();
         String tipoDocNorm = request.getTipoDocumento() == null ? null : request.getTipoDocumento().trim().toUpperCase();
         String numeroDocNorm = request.getNumeroDocumento() == null ? null : request.getNumeroDocumento().trim();
 
-        // Validar email único (ya normalizado)
         if (emailNorm != null && userRepository.existsByEmail(emailNorm)) {
             throw new RuntimeException("El correo ya está registrado");
         }
 
-        // Validar número de documento único (normalizado)
         if (numeroDocNorm != null && userRepository.existsByNumeroDocumento(numeroDocNorm)) {
             throw new RuntimeException("El número de documento ya está registrado");
         }
 
-        // Buscar rol en BD (debe existir: ADMIN / PATIENT / PROFESSIONAL)
         Role role = roleRepository.findByName(roleNameReq)
                 .orElseThrow(() -> new RuntimeException("Rol inválido: " + request.getRole()));
 
-        // Crear usuario
         User user = new User();
         user.setNombre(request.getNombre());
         user.setApellido(request.getApellido());
@@ -72,38 +64,20 @@ public class AdminService {
 
         userRepository.save(user);
 
-        // Crear perfil según rol
         if ("PATIENT".equals(roleNameReq)) {
-
             Patient patient = new Patient();
             patient.setUser(user);
-            // ✅ NO se asigna profesional aquí (lo elige el paciente después)
             patientRepository.save(patient);
             user.setPatient(patient);
 
         } else if ("PROFESSIONAL".equals(roleNameReq)) {
-
             Professional professional = new Professional();
             professional.setUser(user);
+
             professionalRepository.save(professional);
             user.setProfessional(professional);
 
-            // ✅ Jornada por defecto MORNING para el mes actual (Colombia)
-            LocalDate today = LocalDate.now(CO_ZONE);
-
-            // evitar duplicado si por alguna razón ya existe configuración para este mes
-            boolean exists = monthlyShiftRepository
-                    .findByProfessionalIdAndYearAndMonth(professional.getId(), today.getYear(), today.getMonthValue())
-                    .isPresent();
-
-            if (!exists) {
-                ProfessionalMonthlyShift shift = new ProfessionalMonthlyShift();
-                shift.setProfessional(professional);
-                shift.setYear(today.getYear());
-                shift.setMonth(today.getMonthValue());
-                shift.setShift(WorkShift.MORNING);
-                monthlyShiftRepository.save(shift);
-            }
+            createDefaultShiftsForProfessional(professional);
         }
 
         return new UserResponse(
@@ -113,5 +87,30 @@ public class AdminService {
                 user.getEmail(),
                 role.getName()
         );
+    }
+
+    private void createDefaultShiftsForProfessional(Professional professional) {
+        LocalDate today = LocalDate.now();
+
+        for (int i = 0; i < 4; i++) {
+            LocalDate targetMonth = today.plusMonths(i);
+
+            int year = targetMonth.getYear();
+            int month = targetMonth.getMonthValue();
+
+            boolean exists = professionalMonthlyShiftRepository
+                    .findByProfessionalIdAndYearAndMonth(professional.getId(), year, month)
+                    .isPresent();
+
+            if (!exists) {
+                ProfessionalMonthlyShift shift = new ProfessionalMonthlyShift();
+                shift.setProfessional(professional);
+                shift.setYear(year);
+                shift.setMonth(month);
+                shift.setShift(WorkShift.MORNING);
+
+                professionalMonthlyShiftRepository.save(shift);
+            }
+        }
     }
 }

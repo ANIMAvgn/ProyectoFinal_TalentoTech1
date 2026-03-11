@@ -1,34 +1,52 @@
-<div class="container mt-5" style="max-width:400px">
+<div class="login-wrapper">
 
-  <form (ngSubmit)="login()">
+  <div class="login-card">
 
-    <h3 class="mb-4 text-center">Login</h3>
+    <h2 class="text-center mb-4">PRISMA</h2>
+    <p class="text-center text-muted mb-4">
+      Plataforma de gestión psicológica
+    </p>
 
-    <input
-      type="email"
-      class="form-control mb-3"
-      placeholder="Email"
-      name="email"
-      [(ngModel)]="email"
-      required
-    >
+    <form (ngSubmit)="login()" #loginForm="ngForm">
 
-    <input
-      type="password"
-      class="form-control mb-3"
-      placeholder="Password"
-      name="password"
-      [(ngModel)]="password"
-      required
-    >
+      <div class="form-group mb-3">
+        <label>Email</label>
+        <input
+          type="email"
+          class="form-control"
+          placeholder="correo@ejemplo.com"
+          name="email"
+          [(ngModel)]="email"
+          required
+        >
+      </div>
 
-    <button
-      type="submit"
-      class="btn btn-dark w-100"
-    >
-      Login
-    </button>
+      <div class="form-group mb-4">
+        <label>Contraseña</label>
+        <input
+          type="password"
+          class="form-control"
+          placeholder="********"
+          name="password"
+          [(ngModel)]="password"
+          required
+        >
+      </div>
 
-  </form>
+      <button
+        type="submit"
+        class="btn btn-primary w-100"
+        [disabled]="loginForm.invalid"
+      >
+        Iniciar sesión
+      </button>
+
+    </form>
+
+    <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+      {{errorMessage}}
+    </div>
+
+  </div>
 
 </div>

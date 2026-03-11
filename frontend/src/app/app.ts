@@ -26,19 +26,21 @@ export class App {
     return !!localStorage.getItem('token');
   }
 
-  getProfileRoute() {
+  getProfileRoute(): string {
+    const role = localStorage.getItem('role');
 
-  const role = localStorage.getItem('role');
+    if (role === 'PATIENT') {
+      return '/perfil/patient';
+    }
 
-  if (role === 'PATIENT') {
-    return '/perfil-pacientes';
+    if (role === 'PROFESSIONAL') {
+      return '/perfil/professional';
+    }
+
+    if (role === 'ADMIN') {
+      return '/perfil/admin';
+    }
+
+    return '/login';
   }
-
-  if (role === 'PROFESSIONAL') {
-    return '/perfil-doctores';
-  }
-
-  return '/perfil'; // admin
-  }
-
 }

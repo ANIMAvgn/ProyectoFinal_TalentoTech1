@@ -11,7 +11,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -39,20 +38,12 @@ public class SecurityConfig {
             .cors(cors -> {})
             .authorizeHttpRequests(auth -> auth
 
-                // permitir preflight
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-
-                // login
                 .requestMatchers("/auth/**").permitAll()
-
-                // admin
-                .requestMatchers("/admin/**").hasAuthority("ADMIN")
-
-                // paciente
-                .requestMatchers("/patient/**").hasAuthority("PATIENT")
-
-                // profesional
-                .requestMatchers("/professional/**").hasAuthority("PROFESSIONAL")
+                 .requestMatchers("/admin/generate-hash/**").permitAll()
+                .requestMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/patient/**").hasRole("PATIENT")
+                .requestMatchers("/professional/**").hasRole("PROFESSIONAL")
 
                 .anyRequest().authenticated()
             )

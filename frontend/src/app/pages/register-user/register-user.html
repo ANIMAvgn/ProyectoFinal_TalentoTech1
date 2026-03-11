@@ -1,0 +1,115 @@
+<div class="register-page">
+
+  <h2>Registrar usuario</h2>
+
+  <form (ngSubmit)="registerUser()" class="register-form">
+
+    <div class="form-grid">
+
+      <input
+        type="text"
+        placeholder="Nombre"
+        [(ngModel)]="nombre"
+        name="nombre"
+        required
+      />
+
+      <input
+        type="text"
+        placeholder="Apellido"
+        [(ngModel)]="apellido"
+        name="apellido"
+        required
+      />
+
+      <select
+        [(ngModel)]="tipoDocumento"
+        name="tipoDocumento"
+        required
+      >
+        <option value="">Tipo de documento</option>
+        <option value="CC">Cédula</option>
+        <option value="CE">Cédula de extranjería</option>
+        <option value="TI">Tarjeta de identidad</option>
+        <option value="PASSPORT">Pasaporte</option>
+      </select>
+
+      <input
+        type="text"
+        placeholder="Número de documento"
+        [(ngModel)]="numeroDocumento"
+        name="numeroDocumento"
+        required
+      />
+
+      <input
+        type="text"
+        placeholder="Celular"
+        [(ngModel)]="celular"
+        name="celular"
+        required
+      />
+
+      <input
+        type="text"
+        placeholder="Ciudad"
+        [(ngModel)]="ciudad"
+        name="ciudad"
+        required
+      />
+
+      <input
+        type="text"
+        placeholder="Dirección"
+        [(ngModel)]="direccion"
+        name="direccion"
+        required
+      />
+
+      <input
+        type="email"
+        placeholder="Email"
+        [(ngModel)]="email"
+        name="email"
+        required
+      />
+
+      <input
+        type="password"
+        placeholder="Password"
+        [(ngModel)]="password"
+        name="password"
+        required
+      />
+
+      <select
+        [(ngModel)]="role"
+        name="role"
+        required
+      >
+        <option value="">Seleccione rol</option>
+        <option value="PATIENT">Paciente</option>
+        <option value="PROFESSIONAL">Profesional</option>
+      </select>
+
+    </div>
+
+    <button
+      type="submit"
+      class="btn-register"
+      [disabled]="registering"
+    >
+      {{ registering ? 'Registrando...' : 'Registrar usuario' }}
+    </button>
+
+  </form>
+
+  <div *ngIf="successMessage" class="alert-success">
+    {{ successMessage }}
+  </div>
+
+  <div *ngIf="errorMessage" class="alert-error">
+    {{ errorMessage }}
+  </div>
+
+</div>

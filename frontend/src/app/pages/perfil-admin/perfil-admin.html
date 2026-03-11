@@ -1,0 +1,47 @@
+<div class="profile-page">
+
+  <div class="profile-card">
+
+    <div class="profile-left">
+      <span class="badge">Panel administrativo</span>
+      <h1>Bienvenido, {{ adminName }}</h1>
+      <p>
+        Gestiona el sistema PRISMA, registra usuarios y administra el acceso a la
+        plataforma de atención psicológica.
+      </p>
+
+      <div class="actions">
+        <a routerLink="/register-user" class="btn-primary">
+          Registrar usuarios
+        </a>
+
+        <button class="btn-danger" (click)="logout()">
+          Cerrar sesión
+        </button>
+      </div>
+
+      <div *ngIf="errorMessage" class="alert-error">
+        {{ errorMessage }}
+      </div>
+    </div>
+
+    <div class="profile-right">
+      <div class="illustration-card">
+        <div class="window-header">
+          <span></span><span></span><span></span>
+        </div>
+        <div class="admin-visual">
+          <div class="admin-box large"></div>
+          <div class="admin-row">
+            <div class="admin-box small"></div>
+            <div class="admin-box small"></div>
+          </div>
+          <div class="admin-line"></div>
+          <div class="admin-line short"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

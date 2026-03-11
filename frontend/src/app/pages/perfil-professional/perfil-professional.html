@@ -1,0 +1,50 @@
+<div class="profile-page">
+
+  <div class="profile-card">
+
+    <div class="profile-left">
+      <span class="badge">Perfil profesional</span>
+      <h1>Bienvenido, {{ professionalName }}</h1>
+      <p>
+        Consulta la agenda de citas asignadas por tus pacientes y administra
+        tu actividad clínica dentro de PRISMA.
+      </p>
+
+      <div class="actions">
+        <a routerLink="/professional/citas" class="btn-primary">
+          Ver citas asignadas
+        </a>
+
+        <button class="btn-danger" (click)="logout()">
+          Cerrar sesión
+        </button>
+      </div>
+
+      <div *ngIf="errorMessage" class="alert-error">
+        {{ errorMessage }}
+      </div>
+    </div>
+
+    <div class="profile-right">
+      <div class="illustration-card">
+        <div class="window-header">
+          <span></span><span></span><span></span>
+        </div>
+        <div class="professional-visual">
+          <div class="panel large"></div>
+          <div class="panel-row">
+            <div class="panel small"></div>
+            <div class="panel small"></div>
+          </div>
+          <div class="schedule-box">
+            <div class="schedule-line"></div>
+            <div class="schedule-line"></div>
+            <div class="schedule-line short"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

@@ -1,47 +1,68 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './login.html'
 })
-export class LoginComponent {
+export class Login {
 
-  email = "";
-  password = "";
+  email: string = '';
+  password: string = '';
+  errorMessage: string = '';
 
   constructor(
-    private auth: AuthService,
+    private authService: AuthService,
     private router: Router
   ) {}
 
-  login() {
-    this.auth.login(this.email, this.password)
-      .subscribe(res => {
+  login(){
 
-        console.log("LOGIN OK", res);
+    const body = {
+      email: this.email,
+      password: this.password
+    };
 
-        const role = res.role;
+    this.authService
+    .login(body)
+    .subscribe({
+
+      next:(res:any)=>{
 
         localStorage.setItem('token', res.token);
-        localStorage.setItem('role', role);
+      
+        localStorage.setItem('role', res.role);
+        console.log('TOKEN GUARDADO:', localStorage.getItem('token')); 
+        console.log('ROLE GUARDADO:', localStorage.getItem('role'))
 
-        if (role === 'PATIENT') {
-          this.router.navigate(['/perfil-pacientes']);
-        } 
-        else if (role === 'PROFESSIONAL') {
-          this.router.navigate(['/perfil-doctores']);
-        } 
-        else if (role === 'ADMIN') {
-          this.router.navigate(['/perfil']);
+        if(res.role === 'ADMIN'){
+          this.router.navigate(['/perfil/admin']);
         }
 
-      }, err => {
-        alert("Credenciales incorrectas");
-      });
+        if(res.role === 'PATIENT'){
+          this.router.navigate(['/perfil/patient']);
+        }
+
+        if(res.role === 'PROFESSIONAL'){
+          this.router.navigate(['/perfil/professional']);
+        }
+
+      },
+
+      error:()=>{
+
+        this.errorMessage = "Credenciales incorrectas";
+
+      }
+
+    });
+
   }
+
 }

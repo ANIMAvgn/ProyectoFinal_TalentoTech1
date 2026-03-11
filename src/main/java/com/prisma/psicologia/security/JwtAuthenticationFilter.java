@@ -36,9 +36,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             FilterChain filterChain
     ) throws ServletException, IOException {
 
+        // ✅ permitir preflight
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         String path = request.getServletPath();
 
-        if (path.startsWith("/auth/") || path.startsWith("/admin/")) {
+        // ✅ solo rutas públicas
+        if (path.startsWith("/auth/") || path.startsWith("/admin/generate-hash")) {
             filterChain.doFilter(request, response);
             return;
         }

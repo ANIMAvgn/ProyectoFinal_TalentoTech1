@@ -1,0 +1,52 @@
+<div class="profile-page">
+
+  <div class="profile-card">
+
+    <div class="profile-left">
+      <span class="badge">Perfil del paciente</span>
+      <h1>Bienvenido, {{ patientName }}</h1>
+      <p>
+        Consulta tus citas programadas, reserva nuevas sesiones y lleva el seguimiento
+        de tu proceso terapéutico dentro de PRISMA.
+      </p>
+
+      <div class="actions">
+        <a routerLink="/patient/citas" class="btn-primary">
+          Ver mis citas
+        </a>
+
+        <a routerLink="/patient/reservar-cita" class="btn-secondary">
+          Reservar cita
+        </a>
+
+        <button class="btn-danger" (click)="logout()">
+          Cerrar sesión
+        </button>
+      </div>
+
+      <div *ngIf="errorMessage" class="alert-error">
+        {{ errorMessage }}
+      </div>
+    </div>
+
+    <div class="profile-right">
+      <div class="illustration-card">
+        <div class="window-header">
+          <span></span><span></span><span></span>
+        </div>
+        <div class="patient-visual">
+          <div class="avatar-circle"></div>
+          <div class="line long"></div>
+          <div class="line medium"></div>
+          <div class="calendar-card">
+            <div class="slot"></div>
+            <div class="slot"></div>
+            <div class="slot short"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

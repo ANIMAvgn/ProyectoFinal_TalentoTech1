@@ -1,1 +1,49 @@
-<p>professional-appointments works!</p>
+<div class="appointments-page">
+
+  <div class="appointments-header">
+    <h2>Agenda de citas</h2>
+    <p>Consulta las citas que tus pacientes han reservado contigo.</p>
+  </div>
+
+  <div *ngIf="loading" class="info-card">
+    Cargando citas...
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-error">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="successMessage" class="alert alert-success">
+    {{ successMessage }}
+  </div>
+
+  <div *ngIf="!loading && appointments.length === 0" class="empty-card">
+    <h4>No tienes citas asignadas</h4>
+    <p>Cuando un paciente reserve una cita, aparecerá aquí.</p>
+  </div>
+
+  <div class="appointments-grid" *ngIf="!loading && appointments.length > 0">
+    <div class="appointment-card" *ngFor="let appt of appointments">
+
+      <div class="card-top">
+        <h4>{{ appt.patientNombre }} {{ appt.patientApellido }}</h4>
+        <span class="status-badge" [ngClass]="getStatusClass(appt.status)">
+          {{ appt.status }}
+        </span>
+      </div>
+
+      <div class="card-body">
+        <p><strong>Fecha y hora:</strong> {{ appt.startAt }}</p>
+        <p><strong>Duración:</strong> {{ appt.durationMinutes }} minutos</p>
+        <p><strong>Email del paciente:</strong> {{ appt.patientEmail }}</p>
+      </div>
+
+      <div class="card-actions" *ngIf="appt.status === 'BOOKED'">
+        <button class="btn-cancel" (click)="cancelAppointment(appt.appointmentId)">
+          Cancelar cita
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>

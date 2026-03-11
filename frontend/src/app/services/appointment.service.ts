@@ -1,77 +1,41 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppointmentService {
 
-  api = "http://localhost:8081";
+  private api = 'http://localhost:8081';
 
   constructor(private http: HttpClient) {}
 
-  getProfessionals(date: string) {
-
-    if (typeof window === 'undefined') {
-      return this.http.get(`${this.api}/patient/professionals?date=${date}`);
-    }
-
-    const token = localStorage.getItem("token");
-
-    return this.http.get(
-      `${this.api}/patient/professionals?date=${date}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
-    );
+  getMyAppointments(): Observable<any> {
+    return this.http.get(`${this.api}/patient/appointments`);
   }
 
-  getSlots(professionalId:number, date:string) {
+  cancelMyAppointment(id: number): Observable<any> {
+    return this.http.post(`${this.api}/patient/appointments/${id}/cancel`, {});
+  }
 
-  const token = localStorage.getItem("token");
+  getProfessionalsByDate(date: string): Observable<any> {
+    return this.http.get(`${this.api}/patient/professionals?date=${date}`);
+  }
 
-  return this.http.get(
-    `${this.api}/patient/professionals/${professionalId}/slots?date=${date}`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }
-  );
-}
+  getSlotsByProfessional(professionalId: number, date: string): Observable<any> {
+    return this.http.get(`${this.api}/patient/professionals/${professionalId}/slots?date=${date}`);
+  }
 
-  bookSlot(professionalId: number, startAt: string) {
+  bookFromSlot(body: any): Observable<any> {
+    return this.http.post(`${this.api}/patient/appointments/book-from-slot`, body);
+  }
 
-  const token = localStorage.getItem("token");
+  getProfessionalAppointments(): Observable<any> {
+    return this.http.get(`${this.api}/professional/appointments`);
+  }
 
-  return this.http.post(
-    `${this.api}/patient/appointments/book`,
-    {
-      professionalId,
-      startAt
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }
-  );
-}
-
-  getMyAppointments(){
-
-    const token = localStorage.getItem("token");
-
-    return this.http.get(
-      `${this.api}/patient/appointments`,
-      {
-        headers:{
-          Authorization:`Bearer ${token}`
-        }
-      }
-    );
-
+  cancelProfessionalAppointment(id: number): Observable<any> {
+    return this.http.post(`${this.api}/professional/appointments/${id}/cancel`, {});
   }
 }

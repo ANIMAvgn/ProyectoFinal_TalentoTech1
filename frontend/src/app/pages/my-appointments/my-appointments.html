@@ -1,51 +1,49 @@
-<div class="container mt-4">
+<div class="appointments-page">
 
-<h2 class="mb-4">Mis Citas</h2>
+  <div class="appointments-header">
+    <h2>Mis citas</h2>
+    <p>Consulta tus citas agendadas y cancela las que necesites.</p>
+  </div>
 
-<table class="table table-striped">
+  <div *ngIf="loading" class="info-card">
+    Cargando citas...
+  </div>
 
-<thead>
+  <div *ngIf="errorMessage" class="alert alert-error">
+    {{ errorMessage }}
+  </div>
 
-<tr>
-<th>Fecha</th>
-<th>Profesional</th>
-<th>Email</th>
-<th>Estado</th>
-</tr>
+  <div *ngIf="successMessage" class="alert alert-success">
+    {{ successMessage }}
+  </div>
 
-</thead>
+  <div *ngIf="!loading && appointments.length === 0" class="empty-card">
+    <h4>No tienes citas registradas</h4>
+    <p>Cuando reserves una cita aparecerá aquí.</p>
+  </div>
 
-<tbody>
+  <div class="appointments-grid" *ngIf="!loading && appointments.length > 0">
+    <div class="appointment-card" *ngFor="let appt of appointments">
 
-<tr *ngFor="let appt of appointments">
+      <div class="card-top">
+        <h4>{{ appt.professionalNombre }} {{ appt.professionalApellido }}</h4>
+        <span class="status-badge" [ngClass]="getStatusClass(appt.status)">
+          {{ appt.status }}
+        </span>
+      </div>
 
-<td>{{appt.startAt}}</td>
+      <div class="card-body">
+        <p><strong>Fecha y hora:</strong> {{ appt.startAt }}</p>
+        <p><strong>Duración:</strong> {{ appt.durationMinutes }} minutos</p>
+        <p><strong>Email del profesional:</strong> {{ appt.professionalEmail }}</p>
+      </div>
 
-<td>
-Dr. {{appt.professionalNombre}}
-{{appt.professionalApellido}}
-</td>
-
-<td>{{appt.professionalEmail}}</td>
-
-<td>
-
-<span
-class="badge"
-[ngClass]="{
-'bg-success': appt.status === 'BOOKED',
-'bg-danger': appt.status === 'CANCELLED'
-}"
->
-{{appt.status}}
-</span>
-
-</td>
-
-</tr>
-
-</tbody>
-
-</table>
+      <div class="card-actions" *ngIf="appt.status === 'BOOKED'">
+        <button class="btn-cancel" (click)="cancelAppointment(appt.appointmentId)">
+          Cancelar cita
+        </button>
+      </div>
+    </div>
+  </div>
 
 </div>

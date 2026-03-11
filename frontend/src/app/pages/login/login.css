@@ -1,0 +1,28 @@
+.login-wrapper{
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,#3a7bd5,#00d2ff);
+}
+
+.login-card{
+  background:white;
+  padding:40px;
+  border-radius:10px;
+  width:380px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
+
+.login-card h2{
+  font-weight:600;
+}
+
+.form-control{
+  border-radius:6px;
+}
+
+.btn-primary{
+  border-radius:6px;
+  font-weight:500;
+}

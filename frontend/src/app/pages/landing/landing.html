@@ -1,24 +1,99 @@
 <section class="hero">
 
-  <div class="hero-content">
+  <div class="hero-left">
 
-    <h1 class="title">Sistema PRISMA</h1>
+    <span class="badge">Plataforma psicológica virtual</span>
+
+    <h1 class="title">
+      PRISMA
+      <span>gestiona citas, pacientes y seguimiento terapéutico</span>
+    </h1>
 
     <p class="subtitle">
-      Sistema inteligente de gestión de citas para consultorio psicológico
+      Organiza de forma segura la atención psicológica de Psicoproyecto:
+      agenda de citas, historias clínicas, tareas terapéuticas y seguimiento
+      de pacientes en un solo lugar.
     </p>
 
-    <a routerLink="/login" class="btn-login">
-      Iniciar sesión
-    </a>
+    <div class="hero-actions">
+      <a routerLink="/login" class="btn-login">
+        Iniciar sesión
+      </a>
+
+      <a routerLink="/login" class="btn-secondary">
+        Conocer la plataforma
+      </a>
+    </div>
+
+    <div class="hero-features">
+      <div class="feature-card">
+        <h4>Citas virtuales</h4>
+        <p>Reserva y gestión de horarios en pocos pasos.</p>
+      </div>
+
+      <div class="feature-card">
+        <h4>Historias clínicas</h4>
+        <p>Registro organizado y seguro por cada paciente.</p>
+      </div>
+
+      <div class="feature-card">
+        <h4>Tareas terapéuticas</h4>
+        <p>Seguimiento claro entre profesional y paciente.</p>
+      </div>
+    </div>
 
   </div>
 
-  <div class="image-container">
-    <img 
-      src="https://pinaresclinica.com.co/wp-content/uploads/2021/01/Consulta-psicologica-1024x683.jpg"
-      alt="Consulta psicológica"
-    >
+  <div class="hero-right">
+
+    <div class="visual-card main-card">
+      <div class="window-header">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <div class="dashboard-preview">
+        <div class="preview-left">
+          <div class="avatar-circle"></div>
+          <div class="line long"></div>
+          <div class="line medium"></div>
+          <div class="line short"></div>
+        </div>
+
+        <div class="preview-right">
+          <div class="calendar-card">
+            <h5>Agenda de hoy</h5>
+            <div class="calendar-slot">08:00 - Consulta inicial</div>
+            <div class="calendar-slot">10:00 - Seguimiento</div>
+            <div class="calendar-slot">14:00 - Terapia individual</div>
+          </div>
+
+          <div class="task-card">
+            <h5>Tareas del paciente</h5>
+            <div class="task-line"></div>
+            <div class="task-line"></div>
+            <div class="task-line small"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="floating-card floating-one">
+      <span class="floating-title">Pacientes</span>
+      <strong>+24</strong>
+    </div>
+
+    <div class="floating-card floating-two">
+      <span class="floating-title">Citas activas</span>
+      <strong>12</strong>
+    </div>
+
+    <div class="floating-card floating-three">
+      <span class="floating-title">Tareas asignadas</span>
+      <strong>18</strong>
+    </div>
+
   </div>
 
 </section>

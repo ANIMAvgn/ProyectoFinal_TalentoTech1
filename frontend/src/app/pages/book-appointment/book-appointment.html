@@ -1,0 +1,84 @@
+<div class="booking-page">
+
+  <div class="booking-header">
+    <h2>Reservar cita</h2>
+   
+    <p>Selecciona una fecha, elige un profesional y reserva una hora disponible.</p>
+  </div>
+
+  <div class="search-card">
+    <label for="date">Fecha de la cita</label>
+    <input
+      id="date"
+      type="date"
+      [(ngModel)]="selectedDate"
+      (change)="onDateChange()"
+      class="date-input"
+    />
+
+ 
+
+    <button class="btn-search" (click)="searchProfessionals()" [disabled]="loadingProfessionals">
+      {{ loadingProfessionals ? 'Buscando...' : 'Buscar profesionales' }}
+    </button>
+  </div>
+
+  <div class="slots-section" *ngIf="selectedProfessional">
+  <h3>
+    Horarios disponibles con {{ selectedProfessional.nombre }} {{ selectedProfessional.apellido }}
+  </h3>
+
+  <div *ngIf="loadingSlots" class="info-card">
+    Cargando horarios...
+  </div>
+
+  <div class="slots-grid" *ngIf="!loadingSlots && slots.length > 0">
+    <button
+      class="slot-btn"
+      *ngFor="let slot of slots"
+      (click)="bookSlot(slot)"
+      [disabled]="booking"
+    >
+      {{ slot }}
+    </button>
+  </div>
+
+  <div *ngIf="!loadingSlots && slots.length === 0" class="empty-card">
+    No hay horarios disponibles para este profesional en esa fecha.
+  </div>
+</div>
+
+
+
+
+
+  <div *ngIf="errorMessage" class="alert alert-error">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="successMessage" class="alert alert-success">
+    {{ successMessage }}
+  </div>
+
+ <div *ngIf="loadingProfessionals" class="info-card">
+  Cargando profesionales...
+</div>
+
+<div class="professionals-grid" *ngIf="!loadingProfessionals && professionals.length > 0">
+  <div
+    class="professional-card"
+    *ngFor="let professional of professionals"
+    (click)="selectProfessional(professional)"
+    [class.selected]="selectedProfessional?.professionalId === professional.professionalId"
+  >
+    <h4>{{ professional.nombre }} {{ professional.apellido }}</h4>
+    <p><strong>Email:</strong> {{ professional.email }}</p>
+    <p><strong>Jornada:</strong> {{ professional.shift }}</p>
+  </div>
+</div>
+
+<div *ngIf="!loadingProfessionals && selectedDate && professionals.length === 0" class="empty-card">
+  No hay profesionales disponibles para esa fecha.
+</div>
+
+  
